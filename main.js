@@ -16,15 +16,15 @@ const COIN = 2;
 const GROUND = 3;
 const PACMAN = 5;
 
-const LEFT_KEY = 37;
-const UP_KEY = 38;
-const RIGHT_KEY = 39;
-const DOWN_KEY = 40;
-
 const BLUE_GHOST = 15;
 const RED_GHOST = 16;
 const PINK_GHOST = 17;
 const ORANGE_GHOST = 18;
+
+const LEFT_KEY = 37;
+const UP_KEY = 38;
+const RIGHT_KEY = 39;
+const DOWN_KEY = 40;
 
 let map;
 
@@ -87,7 +87,7 @@ function chase(ghost,target){
     drawMap();
 }
 
-// setInterval(()=>chase(orangeGhost, pacman),1000);
+setInterval(()=>chase(orangeGhost, pacman),1000);
 
 
 function createTiles(data) {
