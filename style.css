@@ -1,0 +1,81 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+body {
+  background-color: black;
+}
+
+body > div {
+  margin: 120px auto;
+  text-align: center;
+}
+
+
+.tile {
+  width: 50px;
+  height: 50px;
+
+  display: inline-block;
+  vertical-align: top;
+}
+
+.wall {
+  background-color: blue;
+  border: 2px solid cornflowerblue;
+}
+
+.coin {
+  background-color: yellow;
+  border-radius: 50%;
+  transform: scale(0.3);
+}
+
+
+.blueghost {
+  background-image: url('../images/special.png');
+  background-size:50px 50px;
+  background-repeat:no-repeat;
+  background-color: rgba(0,0,0,0);
+}
+.orangeghost {
+  background-image: url('../images/orange.png');
+  background-size:50px 50px;
+  background-repeat:no-repeat;
+  background-color: rgba(0,0,0,0);
+}
+.redghost {
+  background-image: url('../images/red.png');
+  background-size:50px 50px;
+  background-repeat:no-repeat;
+  background-color: rgba(0,0,0,0);
+}
+.pinkghost {
+  background-image: url('../images/pink.png');
+  background-size:50px 50px;
+  background-repeat:no-repeat;
+  background-color: rgba(0,0,0,0);
+}
+
+
+
+.pacman {
+  background-image: url('../images/mizpacman.png');
+}
+
+.left {
+  background-image: url('../images/mizpacman-left.png');
+}
+
+.up {
+  background-image: url('../images/mizpacman-up.png');
+}
+
+.down {
+  background-image: url('../images/mizpacman-down.png');
+}
