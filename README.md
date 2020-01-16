@@ -118,6 +118,7 @@ function chase(ghost,target){
 ## Future Improvements:
 
 * [ ] Better Design for the game's page
+* [ ] Control Settings for the game (play, pause , sound ...)
 * [ ] Extend the game map
 * [ ] Add super-food to chase ghosts
 * [ ] Add ghost's behavior when being chased down
