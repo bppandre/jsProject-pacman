@@ -43,12 +43,6 @@ body > div {
   background-repeat:no-repeat;
   background-color: rgba(0,0,0,0);
 }
-.orangeghost {
-  background-image: url('./images/orange.png');
-  background-size:50px 50px;
-  background-repeat:no-repeat;
-  background-color: rgba(0,0,0,0);
-}
 .redghost {
   background-image: url('./images/red.png');
   background-size:50px 50px;
@@ -62,20 +56,26 @@ body > div {
   background-color: rgba(0,0,0,0);
 }
 
+.orangeghost {
+  background-image: url('./images/orange.png'), url('https://github.com/bppandre/jsProject-pacman/blob/master/images/orange.png');
+  background-size:50px 50px;
+  background-repeat:no-repeat;
+  background-color: rgba(0,0,0,0);
+}
 
 
 .pacman {
-  background-image: url('./images/mizpacman.png');
+  background-image: url('./images/mizpacman.png'),url('https://github.com/bppandre/jsProject-pacman/blob/master/images/mizpacman.png');
 }
 
 .left {
-  background-image: url('./images/mizpacman-left.png');
+  background-image: url('./images/mizpacman-left.png'),url('https://github.com/bppandre/jsProject-pacman/blob/master/images/mizpacman-left.png');
 }
 
 .up {
-  background-image: url('./images/mizpacman-up.png');
+  background-image: url('./images/mizpacman-up.png'),url('https://github.com/bppandre/jsProject-pacman/blob/master/images/mizpacman-up.png');
 }
 
 .down {
-  background-image: url('./images/mizpacman-down.png');
+  background-image: url('./images/mizpacman-down.png'),url('https://github.com/bppandre/jsProject-pacman/blob/master/images/mizpacman-down.png');
 }
