@@ -38,25 +38,25 @@ body > div {
 
 
 .blueghost {
-  background-image: url('../images/special.png');
+  background-image: url('./images/special.png');
   background-size:50px 50px;
   background-repeat:no-repeat;
   background-color: rgba(0,0,0,0);
 }
 .orangeghost {
-  background-image: url('../images/orange.png');
+  background-image: url('./images/orange.png');
   background-size:50px 50px;
   background-repeat:no-repeat;
   background-color: rgba(0,0,0,0);
 }
 .redghost {
-  background-image: url('../images/red.png');
+  background-image: url('./images/red.png');
   background-size:50px 50px;
   background-repeat:no-repeat;
   background-color: rgba(0,0,0,0);
 }
 .pinkghost {
-  background-image: url('../images/pink.png');
+  background-image: url('./images/pink.png');
   background-size:50px 50px;
   background-repeat:no-repeat;
   background-color: rgba(0,0,0,0);
@@ -65,17 +65,17 @@ body > div {
 
 
 .pacman {
-  background-image: url('../images/mizpacman.png');
+  background-image: url('./images/mizpacman.png');
 }
 
 .left {
-  background-image: url('../images/mizpacman-left.png');
+  background-image: url('./images/mizpacman-left.png');
 }
 
 .up {
-  background-image: url('../images/mizpacman-up.png');
+  background-image: url('./images/mizpacman-up.png');
 }
 
 .down {
-  background-image: url('../images/mizpacman-down.png');
+  background-image: url('./images/mizpacman-down.png');
 }
