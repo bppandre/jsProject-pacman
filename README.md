@@ -11,6 +11,8 @@ Learn more about the original game : [here](https://en.wikipedia.org/wiki/Pac-Ma
 
 ## Summary
 
+![Pacmandemo](./readme/pacdemo.gif)
+
 In this project, I have decided to recreate my version of the original Pacman game solely using basic web technologies i.e
 Javascript, CSS and HTML.
 
