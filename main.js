@@ -1,35 +1,22 @@
 let gameData = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1],
+    [1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 18, 1],
     [1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1],
     [1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1],
-    [1, 2, 2, 2, 1, 1, 18, 1, 1, 2, 2, 2, 1],
+    [1, 2, 2, 2, 1, 1, 2, 1, 1, 2, 2, 2, 1],
     [1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1],
-    [1, 2, 1, 1, 2, 2, 1, 2, 2, 1, 1, 2, 1],
+    [1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1],
     [1, 5, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ];
-
-// this is a bigger board that needs to be finished 
-// http://3.bp.blogspot.com/_Jrhwx8X9P7g/SwRjAFA8AUI/AAAAAAAAAYM/i9m1fOEY4Os/s1600/Pac-man.png
-// let gameData = [
-//     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-//     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
-//     [1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1],
-//     [1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1],
-//     [1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1],
-//     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
-//     [1, 2, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 2, 1],
-//     [1, 2, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 2, 1],
-//     [1, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 1],
-//     [1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 3, 3, 1, 1, 3, 3, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1],
-//     [1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 3, 3, 1, 1, 3, 3, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1],
-// ];
 
 const WALL = 1;
 const COIN = 2;
 const GROUND = 3;
 const PACMAN = 5;
+
+const CROSS = generateCross(gameData);
+
 
 const BLUE_GHOST = 15;
 const RED_GHOST = 16;
@@ -51,14 +38,153 @@ let pacman = {
 };
 
 let orangeGhost = {
-    x:6,
-    y:4,
+    x:11,
+    y:1,
     covering:GROUND
 };
 
-function getDistance(ghost,pacman){
-    let dx = Math.abs(ghost[1]-pacman.x);
-    let dy = Math.abs(pacman.y-ghost[0]);
+function pacClosestNode(){
+    let res = [];
+
+    CROSS.forEach((node) =>{
+        res.push(getDistance(node,pacman));
+    });
+    idx = res.indexOf(Math.min(...res));
+    let result = CROSS[idx];
+    console.log(result);
+    return result;
+}
+
+
+
+var astar = {
+    init: function (grid) {
+        for (var x = 0; x < grid.length; x++) {
+            for (var y = 0; y < grid[x].length; y++) {
+                grid[x][y].f;
+                grid[x][y].g;
+                grid[x][y].h;
+                grid[x][y].debug = "";
+                grid[x][y].parent = null;
+            }
+        }
+    },
+    search: function (grid, start, end) {
+        astar.init(grid);
+
+        var openList = [];
+        var closedList = [];
+        openList.push(start);
+
+        while (openList.length > 0) {
+
+            // Grab the lowest f(x) to process next
+            var lowInd;
+            for (var i =0; i < openList.length; i++) {
+                if (openList[i].f < openList[lowInd].f) { lowInd = i; }
+            }
+            var currentNode = openList[lowInd];
+
+            // End case -- result has been found, return the traced path
+            if (currentNode.pos == end.pos) {
+                var curr = currentNode;
+                var ret = [];
+                while (curr.parent) {
+                    ret.push(curr);
+                    curr = curr.parent;
+                }
+                return ret.reverse();
+            }
+
+            // Normal case -- move currentNode from open to closed, process each of its neighbors
+            openList.removeGraphNode(currentNode);
+            closedList.push(currentNode);
+            var neighbors = astar.neighbors(grid, currentNode);
+
+            for (var i =0; i < neighbors.length; i++) {
+                var neighbor = neighbors[i];
+                if (closedList.findGraphNode(neighbor) || neighbor.isWall()) {
+                    // not a valid node to process, skip to next neighbor
+                    continue;
+                }
+
+                // g score is the shortest distance from start to current node, we need to check if
+                //   the path we have arrived at this neighbor is the shortest one we have seen yet
+                var gScore = currentNode.g + 1; // 1 is the distance from a node to it's neighbor
+                var gScoreIsBest = false;
+
+
+                if (!openList.findGraphNode(neighbor)) {
+                    // This the the first time we have arrived at this node, it must be the best
+                    // Also, we need to take the h (heuristic) score since we haven't done so yet
+
+                    gScoreIsBest = true;
+                    neighbor.h = astar.heuristic(neighbor.pos, end.pos);
+                    openList.push(neighbor);
+                }
+                else if (gScore < neighbor.g) {
+                    // We have already seen the node, but last time it had a worse g (distance from start)
+                    gScoreIsBest = true;
+                }
+
+                if (gScoreIsBest) {
+                    // Found an optimal (so far) path to this node.   Store info on how we got here and
+                    //  just how good it really is...
+                    neighbor.parent = currentNode;
+                    neighbor.g = gScore;
+                    neighbor.f = neighbor.g + neighbor.h;
+                    neighbor.debug = "F: " + neighbor.f + "<br />G: " + neighbor.g + "<br />H: " + neighbor.h;
+                }
+            }
+        }
+
+        // No result was found -- empty array signifies failure to find path
+        return [];
+    },
+    heuristic: function (pos0, pos1) {
+        // This is the Manhattan distance
+        var d1 = Math.abs(pos1.x - pos0.x);
+        var d2 = Math.abs(pos1.y - pos0.y);
+        return d1 + d2;
+    },
+    neighbors: function (grid, node) {
+        var ret = [];
+        var x = node.pos.x;
+        var y = node.pos.y;
+
+        if (grid[x - 1] && grid[x - 1][y]) {
+            ret.push(grid[x - 1][y]);
+        }
+        if (grid[x + 1] && grid[x + 1][y]) {
+            ret.push(grid[x + 1][y]);
+        }
+        if (grid[x][y - 1] && grid[x][y - 1]) {
+            ret.push(grid[x][y - 1]);
+        }
+        if (grid[x][y + 1] && grid[x][y + 1]) {
+            ret.push(grid[x][y + 1]);
+        }
+        return ret;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getDistance(pointOne,pointTwo){
+    let dx = Math.abs(pointOne[1]-pointTwo.x);
+    let dy = Math.abs(pointTwo.y-pointOne[0]);
     return dx+dy;
 }
 
@@ -102,6 +228,29 @@ function chase(ghost,target){
     gameData[ghost.y][ghost.x] = ORANGE_GHOST;
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -208,6 +357,8 @@ function setupKeyboardControls() {
 
 let startBtn = document.getElementById('start');
 let pauseBtn = document.getElementById('pause');
+let resetBtn = document.getElementById('reset');
+
 let ghostId;
 
 function main(){
@@ -226,6 +377,11 @@ function main(){
         document.removeEventListener('keydown',handleKeys);
     });
 
+    resetBtn.addEventListener('click',()=>{
+        console.log('reset');
+        //needs to be implemented with Init(game) function
+    });
+
     function loop() {
         eraseMap();
         drawMap();
@@ -237,6 +393,11 @@ function main(){
 }
 
 main()
+
+
+
+
+
 
 function createTiles(data) {
 
@@ -278,7 +439,7 @@ function createTiles(data) {
                 tile.classList.add(pacman.direction);
 
             }
-
+            
             tilesArray.push(tile);
         }
 
@@ -304,3 +465,57 @@ function drawMap() {
 function eraseMap() {
     document.body.removeChild(map);
 }
+
+
+function isCross(y, x) {
+    if (gameData[y][x] === 1) {
+        return false
+    }
+
+    let up, down, left, right;
+
+    up = gameData[y - 1][x];
+    down = gameData[y + 1][x];
+    left = gameData[y][x - 1];
+    right = gameData[y][x + 1];
+
+    if (up !== WALL || down !== WALL) {
+        if (left !== WALL || right !== WALL) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function generateCross(grid) {
+    let res = [];
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[i].length; j++) {
+            if (isCross(i, j)) {
+                res.push([i, j])
+            }
+
+        }
+    }
+    return res;
+}
+
+function hideGrid() {
+    // this is a bigger board that needs to be finished 
+    // http://3.bp.blogspot.com/_Jrhwx8X9P7g/SwRjAFA8AUI/AAAAAAAAAYM/i9m1fOEY4Os/s1600/Pac-man.png
+    // let gameData = [
+    //     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    //     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
+    //     [1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1],
+    //     [1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1],
+    //     [1, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2, 1],
+    //     [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
+    //     [1, 2, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 2, 1],
+    //     [1, 2, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 2, 1],
+    //     [1, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 2, 1],
+    //     [1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 3, 3, 1, 1, 3, 3, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1],
+    //     [1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 3, 3, 1, 1, 3, 3, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1],
+    // ];
+}
+
