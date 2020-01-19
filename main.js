@@ -41,7 +41,7 @@ const UP_KEY = 38;
 const RIGHT_KEY = 39;
 const DOWN_KEY = 40;
 
-
+let score = 0;
 let map;
 
 let pacman = {
@@ -105,72 +105,7 @@ function chase(ghost,target){
 
 
 
-function createTiles(data) {
-    
-    let tilesArray = [];
-    
-    for (let row of data) {
-        
-        for (let col of row) {
-            
-            
-            let tile = document.createElement('div');
-            
-            tile.classList.add('tile');
-            
-            if (col === WALL) {
-                tile.classList.add('wall');
-                
-            } else if (col === COIN) {
-                tile.classList.add('coin');
-                
-            } else if (col === BLUE_GHOST) {
-                tile.classList.add('blueghost');
-                
-            } else if (col === RED_GHOST) {
-                tile.classList.add('redghost');
-                
-            } else if (col === PINK_GHOST) {
-                tile.classList.add('pinkghost');
-                
-            } else if (col === ORANGE_GHOST) {
-                tile.classList.add('orangeghost');
-                
-            } else if (col === GROUND) {
-                tile.classList.add('ground');
-                
-            } else if (col === PACMAN) {
-                tile.classList.add('pacman');
-                
-                tile.classList.add(pacman.direction);
-                
-            }
-            
-            tilesArray.push(tile);
-        }
-        
-        let brTile = document.createElement('br');
-        
-        tilesArray.push(brTile);
-    }
-    
-    return tilesArray;
-}
 
-function drawMap() {
-    map = document.createElement('div');
-    
-    let tiles = createTiles(gameData);
-    for (let tile of tiles) {
-        map.appendChild(tile);
-    }
-    
-    document.body.appendChild(map);
-}
-
-function eraseMap() {
-    document.body.removeChild(map);
-}
 
 function validPacMove(y,x){
     // <14 condition checks for all ghosts 
@@ -180,11 +115,19 @@ function validPacMove(y,x){
     return false;
 }
 
+function incrementScore(data){
+    if(data===COIN){
+        score+=1;
+    }
+    document.getElementById('score').innerText=score;
+}
+
 function moveDown() {
     pacman.direction = 'down';
     if (validPacMove(pacman.y + 1,pacman.x) ) {
         gameData[pacman.y][pacman.x] = GROUND;
         pacman.y = pacman.y + 1;
+        incrementScore(gameData[pacman.y][pacman.x]);
         gameData[pacman.y][pacman.x] = PACMAN;
     }
 }
@@ -194,6 +137,8 @@ function moveUp() {
     if (validPacMove(pacman.y - 1,pacman.x) ) {
         gameData[pacman.y][pacman.x] = GROUND;
         pacman.y = pacman.y - 1;
+        incrementScore(gameData[pacman.y][pacman.x]);
+
         gameData[pacman.y][pacman.x] = PACMAN;
     }
 }
@@ -201,8 +146,11 @@ function moveUp() {
 function moveLeft() {
     pacman.direction = 'left';
     if (validPacMove(pacman.y,pacman.x - 1) ) {
+
         gameData[pacman.y][pacman.x] = GROUND;
         pacman.x = pacman.x - 1;
+        incrementScore(gameData[pacman.y][pacman.x]);
+
         gameData[pacman.y][pacman.x] = PACMAN;
     }
 }
@@ -212,6 +160,8 @@ function moveRight() {
     if (validPacMove(pacman.y,pacman.x + 1) ) {
         gameData[pacman.y][pacman.x] = GROUND;
         pacman.x = pacman.x + 1;
+        incrementScore(gameData[pacman.y][pacman.x]);
+
         gameData[pacman.y][pacman.x] = PACMAN;
     }
 }
@@ -246,6 +196,16 @@ function setupKeyboardControls() {
     document.addEventListener('keydown', handleKeys);
 }
 
+
+
+
+
+
+
+
+
+
+
 let startBtn = document.getElementById('start');
 let pauseBtn = document.getElementById('pause');
 let ghostId;
@@ -277,3 +237,70 @@ function main(){
 }
 
 main()
+
+function createTiles(data) {
+
+    let tilesArray = [];
+
+    for (let row of data) {
+
+        for (let col of row) {
+
+
+            let tile = document.createElement('div');
+
+            tile.classList.add('tile');
+
+            if (col === WALL) {
+                tile.classList.add('wall');
+
+            } else if (col === COIN) {
+                tile.classList.add('coin');
+
+            } else if (col === BLUE_GHOST) {
+                tile.classList.add('blueghost');
+
+            } else if (col === RED_GHOST) {
+                tile.classList.add('redghost');
+
+            } else if (col === PINK_GHOST) {
+                tile.classList.add('pinkghost');
+
+            } else if (col === ORANGE_GHOST) {
+                tile.classList.add('orangeghost');
+
+            } else if (col === GROUND) {
+                tile.classList.add('ground');
+
+            } else if (col === PACMAN) {
+                tile.classList.add('pacman');
+
+                tile.classList.add(pacman.direction);
+
+            }
+
+            tilesArray.push(tile);
+        }
+
+        let brTile = document.createElement('br');
+
+        tilesArray.push(brTile);
+    }
+
+    return tilesArray;
+}
+
+function drawMap() {
+    map = document.createElement('div');
+
+    let tiles = createTiles(gameData);
+    for (let tile of tiles) {
+        map.appendChild(tile);
+    }
+
+    document.body.appendChild(map);
+}
+
+function eraseMap() {
+    document.body.removeChild(map);
+}

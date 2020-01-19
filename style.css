@@ -16,6 +16,9 @@ body > div {
   text-align: center;
 }
 
+#score{
+  color: white;
+}
 
 .tile {
   width: 50px;
